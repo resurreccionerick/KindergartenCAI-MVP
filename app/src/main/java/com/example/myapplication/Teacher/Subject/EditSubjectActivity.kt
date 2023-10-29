@@ -6,60 +6,67 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
-import android.media.Image
 import android.net.Uri
-import android.opengl.Visibility
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
-import android.view.View.GONE
-import android.view.View.INVISIBLE
-import android.view.View.VISIBLE
+import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.example.myapplication.Teacher.Teacher_Dashboard.TeacherDashboardActivity
-import com.example.myapplication.databinding.ActivityAddSubjectBinding
+import com.example.myapplication.databinding.ActivityEditSubjectBinding
 import com.squareup.picasso.Picasso
 import java.io.ByteArrayOutputStream
-import java.io.File
-import java.io.FileOutputStream
 
-class AddSubjectActivity : AppCompatActivity(), AddSubjectContract.View {
-    private lateinit var binding: ActivityAddSubjectBinding
-    private lateinit var presenter: AddSubjectPresenter
+class EditSubjectActivity : AppCompatActivity(), EditSubjectContract.View {
+
+    private lateinit var binding: ActivityEditSubjectBinding
+    private lateinit var presenter: EditSubjectPresenter
     private val CAMERA_PERMISSION_CODE = 101
     private val STORAGE_PERMISSION_CODE = 102
     private val PICK_IMAGE_REQUEST = 103
-    private val CAMERA_IMAGE_REQUEST = 104
+    private val CAMERA_IMAGE_REQUEST = 103
     private var ImageUri: Uri? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityAddSubjectBinding.inflate(layoutInflater)
+        binding = ActivityEditSubjectBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        presenter = AddSubjectPresenter(this)
+        val subjectId = intent.getStringExtra("subjectId")
+        val subjectTitle = intent.getStringExtra("subjectTitle")
+        val subjectIntentImg = intent.getStringExtra("subjectImg")
 
+        presenter = EditSubjectPresenter(this)
 
-        binding.imgAddSubject.setOnClickListener {
-            showImageSourceDialog()
+        // Convert the subjectImg string to a Uri
+        val subjectImgUri: Uri? = subjectIntentImg?.let { Uri.parse(it) }
+
+        setSubjectDetails(subjectId, subjectTitle, subjectImgUri)
+
+        binding.btnEditUploadSubject.setOnClickListener {
+            binding.progressDialog.progressBarLoading.visibility = View.VISIBLE
+            binding.btnEditUploadSubject.visibility = View.INVISIBLE
+
+            if (subjectTitle == binding.txtEditSubjTitle.text.toString()) {
+                presenter.uploadEditSubject(
+                    intent,
+                    subjectId,
+                    subjectTitle,
+                    ImageUri
+                ) // Pass the Uri
+            } else {
+                presenter.uploadEditSubject(
+                    intent,
+                    subjectId,
+                    binding.txtEditSubjTitle.text.toString(),
+                    ImageUri
+                ) // Pass the Uri
+            }
         }
 
-        binding.btnUploadSubject.setOnClickListener {
-            binding.progressDialog.progressBarLoading.visibility = VISIBLE
-            binding.btnUploadSubject.visibility = INVISIBLE
-
-            val title = binding.txtSubjTitle.text.toString()
-
-            if (title.isNotEmpty() && ImageUri != null) {
-                presenter.uploadSubject(intent, title, ImageUri!!)
-            } else {
-                binding.progressDialog.progressBarLoading.visibility = GONE
-                binding.btnUploadSubject.visibility = VISIBLE
-                showToast("Please provide a title and select an image.")
-            }
+        binding.imgEditSubject.setOnClickListener {
+            showImageSourceDialog()
         }
     }
 
@@ -90,12 +97,23 @@ class AddSubjectActivity : AppCompatActivity(), AddSubjectContract.View {
         builder.show()
     }
 
+    override fun onSubjectUploaded() {
+        binding.progressDialog.progressBarLoading.visibility = View.VISIBLE
+        binding.btnEditUploadSubject.visibility = View.INVISIBLE
+        finish()
+        startActivity(Intent(this@EditSubjectActivity, TeacherDashboardActivity::class.java))
+    }
+
     override fun requestCameraPermission() {
         requestPermission(Manifest.permission.CAMERA, CAMERA_PERMISSION_CODE)
     }
 
     override fun requestStoragePermission() {
         requestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, STORAGE_PERMISSION_CODE)
+    }
+
+    private fun requestPermission(permission: String, requestCode: Int) {
+        ActivityCompat.requestPermissions(this, arrayOf(permission), requestCode)
     }
 
     override fun pickImageFromGallery() {
@@ -111,10 +129,6 @@ class AddSubjectActivity : AppCompatActivity(), AddSubjectContract.View {
         } else {
             showToast("Camera is not available.")
         }
-    }
-
-    private fun requestPermission(permission: String, requestCode: Int) {
-        ActivityCompat.requestPermissions(this, arrayOf(permission), requestCode)
     }
 
     override fun onRequestPermissionsResult(
@@ -136,29 +150,33 @@ class AddSubjectActivity : AppCompatActivity(), AddSubjectContract.View {
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.data != null) {
             // Image selected from storage
             ImageUri = data.data
-            binding.imgAddSubject.setImageURI(ImageUri)
+            binding.imgEditSubject.setImageURI(ImageUri)
         } else if (requestCode == CAMERA_IMAGE_REQUEST && resultCode == Activity.RESULT_OK) {
             // Handle the captured image from the camera
             if (data != null && data.extras != null) {
                 val bitmap = data.extras?.get("data") as Bitmap
                 ImageUri = getImageUriFromBitmap(bitmap)
-                binding.imgAddSubject.setImageBitmap(bitmap)
+                binding.imgEditSubject.setImageBitmap(bitmap)
             }
         }
     }
 
-    private fun getImageUriFromBitmap(bitmap: Bitmap): Uri? {
+    private fun getImageUriFromBitmap(bitmap: Bitmap): Uri {
         val bytes = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
         val path = MediaStore.Images.Media.insertImage(contentResolver, bitmap, "Title", null)
         return Uri.parse(path)
     }
 
-    override fun onSubjectUploaded() {
-        binding.progressDialog.progressBarLoading.visibility = GONE
-        binding.btnUploadSubject.visibility = INVISIBLE
-        finish()
-        startActivity(Intent(this@AddSubjectActivity, TeacherDashboardActivity::class.java))
+
+    private fun setSubjectDetails(subjectId: String?, subjectTitle: String?, subjectImg: Uri?) {
+        binding.txtEditSubjTitle.setText(subjectTitle)
+        Picasso.get().load(subjectImg).into(binding.imgEditSubject)
+    }
+
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     override fun showSuccessMessage(message: String) {
@@ -166,12 +184,6 @@ class AddSubjectActivity : AppCompatActivity(), AddSubjectContract.View {
     }
 
     override fun showErrorMessage(message: String) {
-        binding.btnUploadSubject.visibility = VISIBLE
         showToast(message)
     }
-
-    private fun showToast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-    }
 }
-

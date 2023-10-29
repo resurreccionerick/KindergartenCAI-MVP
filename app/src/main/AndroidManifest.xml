@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
 
     <application
         android:allowBackup="true"
@@ -19,7 +19,17 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
+            android:name=".Teacher.Subject.EditSubjectActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Teacher.Subject.SubjectActivity"
+            android:exported="false" />
+        <activity
             android:name=".Student.SplashScreenActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".Teacher.Teacher_Dashboard.TeacherDashboardActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,9 +37,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".Teacher.Teacher_Dashboard.TeacherDashboardActivity"
-            android:exported="false" />
         <activity
             android:name=".Teacher.Quiz.QuizActivity"
             android:exported="false" />
@@ -45,7 +52,6 @@
         <activity
             android:name=".Login.LoginActivity"
             android:exported="false" />
-
     </application>
 
 </manifest>
