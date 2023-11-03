@@ -18,7 +18,6 @@ class AddSubjectPresenter(private val view: AddSubjectContract.View) :
 
     private val databaseReference = FirebaseDatabase.getInstance().getReference("Subjects")
     private val storageReference = FirebaseStorage.getInstance().reference
-    private var editMode: Boolean = false // Add a flag for edit mod
 
     override fun uploadSubject(intent: Intent, title: String, selectedImageUri: Uri) {
         val subjectId = intent.getStringExtra("subjectId")

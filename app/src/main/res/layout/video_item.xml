@@ -17,21 +17,20 @@
             android:orientation="vertical"
             android:padding="8dp">
 
-            <ImageView
-                android:id="@+id/imgSubject"
+            <VideoView
+                android:id="@+id/videoViewVideo"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
                 android:layout_gravity="center"
                 android:adjustViewBounds="true"
-                android:scaleType="fitXY"
                 android:src="@color/black" />
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:background="#f2f2f2"
+                android:orientation="horizontal"
                 android:padding="8dp">
 
                 <TextView
@@ -45,7 +44,7 @@
                     android:textStyle="bold" />
 
                 <ImageButton
-                    android:id="@+id/fabSubjEdit"
+                    android:id="@+id/fabVideoEdit"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="end"
@@ -55,7 +54,7 @@
                     app:tint="@color/white" />
 
                 <ImageButton
-                    android:id="@+id/fabSubjDelete"
+                    android:id="@+id/fabVideoDelete"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="end"

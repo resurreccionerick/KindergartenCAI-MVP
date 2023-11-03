@@ -2,6 +2,7 @@ package com.example.myapplication.Teacher.Subject
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -46,6 +47,8 @@ class SubjectActivity : AppCompatActivity(), SubjectContract.View {
 
 
         // Load subjects
+        binding.progressDialog.progressBarLoading.visibility = View.VISIBLE
+        binding.fabAddSubjList.visibility = View.GONE
         presenter.loadSubjects()
 
         // Set a click listener for adding a new subject
@@ -56,6 +59,8 @@ class SubjectActivity : AppCompatActivity(), SubjectContract.View {
 
     override fun showSubjects(subjects: List<Subject>) {
         // Update the adapter with the list of subjects
+        binding.progressDialog.progressBarLoading.visibility = View.GONE
+        binding.fabAddSubjList.visibility = View.VISIBLE
         adapter.updateData(subjects)
     }
 

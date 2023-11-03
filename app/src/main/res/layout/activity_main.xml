@@ -36,7 +36,7 @@
             android:id="@+id/txtLoginEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="erick@yahoo.com"
+            android:text="jeje@yahoo.com"
             android:layout_marginTop="10dp"
             android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>

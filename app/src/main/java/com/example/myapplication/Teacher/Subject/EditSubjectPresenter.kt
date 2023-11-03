@@ -52,7 +52,6 @@ class EditSubjectPresenter(private val view: EditSubjectActivity) : EditSubjectC
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         if (dataSnapshot.exists()) {
                             val currentTitle = dataSnapshot.child("title").value.toString()
-                            val currentImageUrl = dataSnapshot.child("imageUrl").value.toString()
 
                             // Check if the title and image are being changed
                             val isTitleChanged = title != currentTitle
@@ -116,8 +115,4 @@ class EditSubjectPresenter(private val view: EditSubjectActivity) : EditSubjectC
     override fun onStoragePermissionGranted() {
         view.pickImageFromGallery()
     }
-
-//    override fun pickImageFromGallery() {
-//        view.pickImageFromGallery()
-//    }
 }

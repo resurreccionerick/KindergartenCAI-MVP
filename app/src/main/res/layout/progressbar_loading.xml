@@ -1,24 +1,40 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/progressBarLoading"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#80000000"
-    android:clickable="false"
+    android:clickable="true"
     android:focusable="true"
-    android:gravity="center"
-    android:visibility="gone">
+    android:visibility="gone"
+    >
 
-    <RelativeLayout
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="#FFFEFC"
         android:clickable="false"
-        android:focusable="true">
+        android:padding="10dp"
+        android:focusable="false"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="160dp"
+            android:layout_height="130dp"
+            android:layout_gravity="center"
+            android:src="@drawable/logo" />
 
         <!-- Add a ProgressBar and other UI elements for your progress bar here -->
         <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true" />
-    </RelativeLayout>
-</RelativeLayout>
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

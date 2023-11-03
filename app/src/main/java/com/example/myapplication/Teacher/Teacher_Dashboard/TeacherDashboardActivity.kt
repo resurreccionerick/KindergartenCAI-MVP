@@ -15,7 +15,7 @@ class TeacherDashboardActivity : AppCompatActivity() {
         binding = ActivityTeacherDashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.fabAddSubj.setOnClickListener {
+        binding.btnAddSubj.setOnClickListener {
             val intent = Intent(this@TeacherDashboardActivity, SubjectActivity::class.java)
             startActivity(intent)
             finish()

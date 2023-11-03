@@ -1,7 +1,10 @@
 package com.example.myapplication.Teacher.Subject
 
+import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.Models.Subject
 import com.example.myapplication.databinding.SubjectItemBinding
@@ -28,6 +31,13 @@ class SubjectAdapter(
 
             binding.fabSubjEdit.setOnClickListener {
                 onEditClick(subject)
+            }
+
+            binding.cardSubject.setOnClickListener {
+                val videoIntent = Intent(binding.root.context, AddLessonActivity::class.java)
+                videoIntent.putExtra("subjectID", subject.id)
+                Log.d("ID SubjAdapter", "SubjAdapter " + subject.id.toString())
+                binding.root.context.startActivity(videoIntent)
             }
         }
     }
