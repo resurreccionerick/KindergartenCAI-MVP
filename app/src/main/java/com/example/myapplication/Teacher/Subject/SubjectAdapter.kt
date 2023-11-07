@@ -34,10 +34,10 @@ class SubjectAdapter(
             }
 
             binding.cardSubject.setOnClickListener {
-                val videoIntent = Intent(binding.root.context, AddLessonActivity::class.java)
-                videoIntent.putExtra("subjectID", subject.id)
+                val intent = Intent(binding.root.context, AddLessonActivity::class.java)
+                intent.putExtra("subjectID", subject.id)
                 Log.d("ID SubjAdapter", "SubjAdapter " + subject.id.toString())
-                binding.root.context.startActivity(videoIntent)
+                binding.root.context.startActivity(intent)
             }
         }
     }
