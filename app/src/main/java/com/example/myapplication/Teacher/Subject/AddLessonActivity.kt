@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import com.example.myapplication.R
+import com.example.myapplication.Teacher.Subject.Audio.AddAudioPresenter
+import com.example.myapplication.Teacher.Subject.Audio.AudioActivity
 import com.example.myapplication.Teacher.Subject.Quiz.TeacherQuizActivity
 import com.example.myapplication.Teacher.Subject.Video.AddVideoActivity
 import com.example.myapplication.Teacher.Subject.Video.VideoActivity
@@ -22,17 +24,24 @@ class AddLessonActivity : AppCompatActivity() {
         val subjID = intent.getStringExtra("subjectID") //get from adapter
 
         binding.btnAddVideo.setOnClickListener {
-            val videoIntent = Intent(binding.root.context, VideoActivity::class.java)
-            videoIntent.putExtra("subjectID", subjID.toString())
+            val intent = Intent(binding.root.context, VideoActivity::class.java)
+            intent.putExtra("subjectID", subjID.toString())
             Log.d("ID", "AddLessonAct + " + subjID.toString())
-            binding.root.context.startActivity(videoIntent)
+            binding.root.context.startActivity(intent)
         }
 
         binding.btnAddQuiz.setOnClickListener {
-            val videoIntent = Intent(binding.root.context, TeacherQuizActivity::class.java)
-            videoIntent.putExtra("subjectID", subjID.toString())
+            val intent = Intent(binding.root.context, TeacherQuizActivity::class.java)
+            intent.putExtra("subjectID", subjID.toString())
             Log.d("ID", "AddLessonAct + " + subjID.toString())
-            binding.root.context.startActivity(videoIntent)
+            binding.root.context.startActivity(intent)
+        }
+
+        binding.btnAddSound.setOnClickListener {
+            val intent = Intent(binding.root.context, AudioActivity::class.java)
+            intent.putExtra("subjectID", subjID.toString())
+            Log.d("ID", "AddLessonAct + " + subjID.toString())
+            binding.root.context.startActivity(intent)
         }
     }
 }

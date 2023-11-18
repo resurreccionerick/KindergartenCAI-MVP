@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
@@ -20,6 +21,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="31">
+        <activity
+            android:name=".Student.Subject.PickLessonActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Student.Subject.SubjectActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Teacher.Subject.Audio.AudioActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Teacher.Subject.Audio.AddAudioActivity"
+            android:exported="false" />
         <activity
             android:name=".Teacher.Subject.Quiz.EditQuizActivity"
             android:exported="false" />
@@ -52,16 +65,9 @@
             android:exported="false" />
         <activity
             android:name=".Teacher.Teacher_Dashboard.TeacherDashboardActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".Teacher.Subject.Quiz.QuizActivity"
-            android:exported="false" />
+            android:exported="false"></activity> <!-- <activity -->
+        <!-- android:name=".Teacher.Subject.Quiz.QuizActivity" -->
+        <!-- android:exported="false" /> -->
         <activity
             android:name=".Teacher.Subject.AddSubjectActivity"
             android:exported="false" />
@@ -73,7 +79,13 @@
             android:exported="false" />
         <activity
             android:name=".Login.LoginActivity"
-            android:exported="false" />
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

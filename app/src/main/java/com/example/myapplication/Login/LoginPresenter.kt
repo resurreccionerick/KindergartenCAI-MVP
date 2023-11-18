@@ -1,5 +1,6 @@
 package com.example.myapplication.Login
 
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.firestore.FirebaseFirestore
@@ -15,53 +16,53 @@ class LoginPresenter(private val view: LoginContract.View) : LoginContract.Prese
 
     override fun doLogin(email: String, password: String) {
         val currentUser = firebaseAuth.currentUser
+        if (email != null || password != null) {
 
-        if (currentUser != null) {
-            val userDocument = firebaseFirestore.collection("Users").document(currentUser.uid)
+            firebaseAuth.signInWithEmailAndPassword(email, password).addOnSuccessListener {
+                if (currentUser != null) {
+                    val userDocument =
+                        firebaseFirestore.collection("Users").document(currentUser.uid)
 
-            userDocument.get()
-                .addOnSuccessListener { documentSnapshot ->
-                    if (documentSnapshot.exists()) {
-                        val isStudent = documentSnapshot.getBoolean("isStudent")
+                    userDocument.get()
+                        .addOnSuccessListener { documentSnapshot ->
+                            if (documentSnapshot.exists()) {
+                                val isStudent = documentSnapshot.getBoolean("isStudent")
 
-                        if (isStudent != null) {
-                            if (isStudent) {
-                                // The "student" field is true
-                                // You can handle this case here
-                                view.onSuccess("Student login successful!", true)
+                                if (isStudent != null) {
+                                    if (isStudent) {
+                                        // The "student" field is true
+                                        // You can handle this case here
+                                        view.onSuccess("Student login successful!", true)
+                                    } else {
+                                        // The "student" field is false
+                                        // You can handle this case here
+                                        view.onSuccess("Non-student login successful!", false)
+                                    }
+                                } else {
+                                    // The "student" field is not present or is null
+                                    view.onFailure("User document is missing the 'student' field")
+                                }
                             } else {
-                                // The "student" field is false
-                                // You can handle this case here
-                                view.onSuccess("Non-student login successful!",false)
+                                // User document doesn't exist
+                                view.onFailure("User document not found")
                             }
-                        } else {
-                            // The "student" field is not present or is null
-                            view.onFailure("User document is missing the 'student' field")
                         }
-                    } else {
-                        // User document doesn't exist
-                        view.onFailure("User document not found")
-                    }
+                        .addOnFailureListener { exception ->
+                            // Handle failure
+                            view.onFailure("Error while getting user data: ${exception.message}")
+                        }
+                } else {
+                    // User is not logged in
+                    view.onFailure("User not logged in")
                 }
-                .addOnFailureListener { exception ->
-                    // Handle failure
-                    view.onFailure("Error while getting user data: ${exception.message}")
-                }
+            }.addOnFailureListener {
+                Log.e("login error: ", it.message.toString())
+                view.onFailure("Error: " + it.message.toString())
+            }
         } else {
-            // User is not logged in
-            view.onFailure("User not logged in")
+            view.onFailure("Please enter all fields")
         }
     }
-
-
-
-
-
-
-
-
-
-
 
 
 //    override fun doLogin(email: String, password: String) {
