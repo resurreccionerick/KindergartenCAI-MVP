@@ -44,12 +44,19 @@ class AddAudioActivity : AppCompatActivity(), AddAudioContract.View {
             presenter.onAudioStoragePermissionGranted()
         }
 
+        val subjID = intent.getStringExtra("subjectID")
+
         binding.btnSaveAudio.setOnClickListener {
             if (binding.txtAddAudio.text.toString()
                     .isNotEmpty() && AudioUri != null && ImageUri != null
             ) {
+                binding.progressDialog.progressBarLoading.visibility = View.VISIBLE
+                binding.btnSaveAudio.visibility = View.INVISIBLE
+                binding.btnAddAudio.visibility = View.INVISIBLE
+
                 presenter.uploadAudio(
                     intent,
+                    subjID.toString(),
                     binding.txtAddAudio.text.toString(),
                     AudioUri!!,
                     ImageUri!!
@@ -118,7 +125,7 @@ class AddAudioActivity : AppCompatActivity(), AddAudioContract.View {
     }
 
     override fun pickAudio() {
-        val intent = Intent(Intent.ACTION_PICK)
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "audio/*"
         startActivityForResult(intent, AUDIO_REQUEST)
     }

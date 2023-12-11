@@ -19,6 +19,7 @@ interface AddAudioContract {
     interface Presenter {
         fun uploadAudio(
             intent: Intent,
+            subjectId: String,
             title: String,
             audio: Uri,
             image: Uri

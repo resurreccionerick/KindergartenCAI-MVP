@@ -1,4 +1,4 @@
-package com.example.myapplication.Teacher.Subject.Video
+package com.example.myapplication.Student.Subject.Video
 
 import android.util.Log
 import com.example.myapplication.Models.Video
@@ -7,8 +7,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
-class VideoPresenter(private var view: VideoActivity) : VideoContract.Presenter {
-
+class VideoPresenter(var view: VideoActivity) : VideoContract.Presenter {
     override fun loadVideo(id: String) {
         val databaseReference =
             FirebaseDatabase.getInstance().getReference("Subjects").child(id).child("Video")
@@ -34,17 +33,5 @@ class VideoPresenter(private var view: VideoActivity) : VideoContract.Presenter 
                 view.showErrorMessage("Error: " + databaseError.message)
             }
         })
-    }
-
-    override fun deleteVideo(subjId: String, videoId: String, video: Video) {
-        val databaseReference =
-            FirebaseDatabase.getInstance().getReference("Subjects").child(subjId).child("Video")
-                .child(videoId)
-
-        databaseReference.removeValue().addOnCompleteListener {
-            view.showSuccessMessage(video.title + " Video Deleted")
-        }.addOnFailureListener {
-            view.showSuccessMessage(it.message.toString())
-        }
     }
 }
