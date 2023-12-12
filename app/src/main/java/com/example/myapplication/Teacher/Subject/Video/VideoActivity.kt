@@ -31,7 +31,7 @@ class VideoActivity : AppCompatActivity(), VideoContract.View {
             },
             onEditClick = { video ->
                 val intent = Intent(this, EditVideoActivity::class.java)
-                intent.putExtra("videoId", video.id) // Pass the subject details
+                intent.putExtra("videoId", video.id)
                 intent.putExtra("videoTitle", video.title)
                 intent.putExtra("subjectVideo", video.videoUrl)
                 intent.putExtra("subjectID", subjID)

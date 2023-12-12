@@ -52,7 +52,8 @@
                     android:layout_margin="2dp"
                     android:background="#017DDF"
                     android:src="@drawable/baseline_play_arrow_24"
-                    app:tint="@color/white" />
+                    app:tint="#FFFFFF" />
+
 
                 <ImageButton
                     android:id="@+id/fabVideoEdit"

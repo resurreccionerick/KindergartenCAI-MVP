@@ -14,13 +14,14 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import com.example.myapplication.R
 import com.example.myapplication.Teacher.Teacher_Dashboard.TeacherDashboardActivity
-import com.example.myapplication.databinding.ActivityAddAudioBinding
+import com.example.myapplication.databinding.ActivityEditAudioBinding
+import com.squareup.picasso.Picasso
 import java.io.ByteArrayOutputStream
 
-class AddAudioActivity : AppCompatActivity(), AddAudioContract.AddAudioView {
+class EditAudioActivity : AppCompatActivity(), EditAudioContract.View {
 
-    private lateinit var binding: ActivityAddAudioBinding
-    private lateinit var presenter: AddAudioPresenter
+    private lateinit var binding: ActivityEditAudioBinding
+    private lateinit var presenter: EditAudioPresenter
     private val CAMERA_PERMISSION_CODE = 101
     private val STORAGE_PERMISSION_CODE = 102
     private val PICK_IMAGE_REQUEST = 103
@@ -30,34 +31,40 @@ class AddAudioActivity : AppCompatActivity(), AddAudioContract.AddAudioView {
     private var AudioUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        binding = ActivityAddAudioBinding.inflate(layoutInflater)
+        binding = ActivityEditAudioBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        presenter = AddAudioPresenter(this)
+        val audioId = intent.getStringExtra("audioId").toString()
+        val audioTitle = intent.getStringExtra("audioTitle").toString()
+        val audioUri = intent.getStringExtra("audioUrl").toString()
+        val audioPicUri = intent.getStringExtra("audioAudioPic").toString()
+        val subjId = intent.getStringExtra("subjectID")
+        setAudioDetails(audioTitle, audioUri, audioPicUri)
 
-        binding.imgAddAudio.setOnClickListener {
+        presenter = EditAudioPresenter(this)
+
+        binding.imgEditAudio.setOnClickListener {
             showImageSourceDialog()
         }
 
-        binding.btnAddAudio.setOnClickListener {
+        binding.btnEditAudio.setOnClickListener {
             presenter.onAudioStoragePermissionGranted()
         }
 
-        val subjID = intent.getStringExtra("subjectID")
-
         binding.btnSaveAudio.setOnClickListener {
-            if (binding.txtAddAudio.text.toString()
+            if (binding.txtEditAudio.text.toString()
                     .isNotEmpty() && AudioUri != null && ImageUri != null
             ) {
                 binding.progressDialog.progressBarLoading.visibility = View.VISIBLE
                 binding.btnSaveAudio.visibility = View.INVISIBLE
-                binding.btnAddAudio.visibility = View.INVISIBLE
+                binding.btnEditAudio.visibility = View.INVISIBLE
 
-                presenter.uploadAudio(
+                presenter.uploadEditAudio(
+                    audioId,
                     intent,
-                    subjID.toString(),
-                    binding.txtAddAudio.text.toString(),
+                    subjId.toString(),
+                    binding.txtEditAudio.text.toString(),
                     AudioUri!!,
                     ImageUri!!
                 )
@@ -67,7 +74,21 @@ class AddAudioActivity : AppCompatActivity(), AddAudioContract.AddAudioView {
         }
     }
 
-    private fun showImageSourceDialog() {
+    private fun setAudioDetails(audioTitle: String, audioUri: String, audioPicUri: String) {
+        binding.txtEditAudio.setText(audioTitle)
+        binding.btnEditAudio.text = audioUri
+
+        Picasso.get().load(audioPicUri).into(binding.imgEditAudio)
+    }
+
+    override fun onAudioUploaded() {
+        binding.progressDialog.progressBarLoading.visibility = View.GONE
+        binding.btnSaveAudio.visibility = View.INVISIBLE
+        finish()
+        startActivity(Intent(this@EditAudioActivity, TeacherDashboardActivity::class.java))
+    }
+
+    override fun showImageSourceDialog() {
         val options = arrayOf("Take Photo", "Choose from Gallery", "Cancel")
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Add Audio")
@@ -92,24 +113,6 @@ class AddAudioActivity : AppCompatActivity(), AddAudioContract.AddAudioView {
         }
 
         builder.show()
-    }
-
-    override fun onAudioUploaded() {
-        binding.progressDialog.progressBarLoading.visibility = View.GONE
-        binding.btnSaveAudio.visibility = View.INVISIBLE
-        finish()
-        startActivity(Intent(this@AddAudioActivity, TeacherDashboardActivity::class.java))
-    }
-
-    override fun showSuccessMessage(message: String) {
-        showToast(message)
-    }
-
-    override fun showErrorMessage(message: String) {
-        binding.progressDialog.progressBarLoading.visibility = View.GONE
-        binding.btnSaveAudio.visibility = View.VISIBLE
-
-        showToast(message)
     }
 
     override fun requestCameraPermission() {
@@ -145,6 +148,18 @@ class AddAudioActivity : AppCompatActivity(), AddAudioContract.AddAudioView {
         }
     }
 
+    override fun showMessage(message: String) {
+        showToast(message)
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun requestPermission(permission: String, requestCode: Int) {
+        ActivityCompat.requestPermissions(this, arrayOf(permission), requestCode)
+    }
+
     private fun getImageUriFromBitmap(bitmap: Bitmap): Uri? {
         val bytes = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
@@ -157,28 +172,20 @@ class AddAudioActivity : AppCompatActivity(), AddAudioContract.AddAudioView {
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.data != null) {
             // Image selected from storage
             ImageUri = data.data
-            binding.imgAddAudio.setImageURI(ImageUri)
+            binding.imgEditAudio.setImageURI(ImageUri)
         } else if (requestCode == CAMERA_IMAGE_REQUEST && resultCode == Activity.RESULT_OK) {
             // Handle the captured image from the camera
             if (data != null && data.extras != null) {
                 val bitmap = data.extras?.get("data") as Bitmap
                 ImageUri = getImageUriFromBitmap(bitmap)
-                binding.imgAddAudio.setImageBitmap(bitmap)
+                binding.imgEditAudio.setImageBitmap(bitmap)
             }
         } else if (requestCode == AUDIO_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.data != null) {
             // Audio file selected
             AudioUri = data.data
             // You can display the selected audio file's name on the button
             val audioName = data.data?.lastPathSegment
-            binding.btnAddAudio.text = audioName
+            binding.btnEditAudio.text = audioName
         }
-    }
-
-    private fun showToast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-    }
-
-    private fun requestPermission(permission: String, requestCode: Int) {
-        ActivityCompat.requestPermissions(this, arrayOf(permission), requestCode)
     }
 }

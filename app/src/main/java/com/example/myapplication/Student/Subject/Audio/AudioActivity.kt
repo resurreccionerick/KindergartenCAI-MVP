@@ -36,14 +36,13 @@ class AudioActivity : AppCompatActivity(), AudioContract.View {
         presenter.loadAudio(subjID.toString())
     }
 
-    override fun showMessage(message: String) {
-        showToast(message)
-    }
-
     override fun showAudio(audio: List<Audio>) {
         adapter.updateData(audio)
     }
 
+    override fun showMessage(message: String) {
+        showToast(message)
+    }
 
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()

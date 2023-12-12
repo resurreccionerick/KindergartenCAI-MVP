@@ -2,9 +2,11 @@ package com.example.myapplication.Teacher.Subject.Audio
 
 import android.content.Intent
 import android.net.Uri
+import com.example.myapplication.Models.Audio
 
 interface AddAudioContract {
-    interface View {
+    //for adding audio
+    interface AddAudioView {
         fun onAudioUploaded()
         fun showSuccessMessage(message: String)
         fun showErrorMessage(message: String)
@@ -29,4 +31,17 @@ interface AddAudioContract {
         fun onStoragePermissionGranted()
         fun onAudioStoragePermissionGranted()
     }
+
+
+    //for the audio activity
+    interface AudioView {
+        fun showMessage(message: String)
+        fun showAudio(audio: List<Audio>)
+    }
+
+    interface AudioPresenter {
+        fun loadAudio(id: String)
+        fun deleteAudio(subjID: String, audioID: String, audio: Audio)
+    }
+
 }

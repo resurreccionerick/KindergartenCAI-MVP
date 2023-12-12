@@ -1,4 +1,4 @@
-package com.example.myapplication.Student.Subject.Audio
+package com.example.myapplication.Teacher.Subject.Audio
 
 import android.media.MediaPlayer
 import android.util.Log
@@ -11,7 +11,12 @@ import com.example.myapplication.R
 import com.example.myapplication.databinding.AudioItemBinding
 import com.squareup.picasso.Picasso
 
-class AudioAdapter(private var audio: List<Audio>) :
+
+class AudioAdapter(
+    private var audio: List<Audio>,
+    private val onEditClick: (Audio) -> Unit,
+    private val onDeleteClick: (Audio) -> Unit
+) :
     RecyclerView.Adapter<AudioAdapter.AudioViewHolder>() {
 
     private var mediaPlayer: MediaPlayer? = null
@@ -19,9 +24,21 @@ class AudioAdapter(private var audio: List<Audio>) :
 
     inner class AudioViewHolder(val binding: AudioItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            // Initialize isPlaying to the default state (e.g., false)
+            isPlaying = false
+        }
+
         fun bind(audio: Audio) {
-            binding.fabVideoEdit.isVisible = false
-            binding.fabVideoDelete.isVisible = false
+
+            binding.fabVideoEdit.setOnClickListener {
+                onEditClick(audio)
+            }
+
+            binding.fabVideoDelete.setOnClickListener {
+                onDeleteClick(audio)
+            }
 
             binding.txtTitle.text = audio.title
 
@@ -46,7 +63,11 @@ class AudioAdapter(private var audio: List<Audio>) :
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AudioViewHolder {
+
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): AudioAdapter.AudioViewHolder {
         val binding = AudioItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return AudioViewHolder(binding)
     }
@@ -60,12 +81,13 @@ class AudioAdapter(private var audio: List<Audio>) :
         holder.bind(currentAudio)
     }
 
+
     fun updateData(audioList: List<Audio>) {
         audio = audioList
         notifyDataSetChanged()
     }
 
-    private fun playAudio(audioUrl: String) {
+    fun playAudio(audioUrl: String) {
         mediaPlayer?.release() // Release any existing MediaPlayer instance
 
         mediaPlayer = MediaPlayer().apply {
