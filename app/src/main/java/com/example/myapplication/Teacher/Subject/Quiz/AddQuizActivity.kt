@@ -48,6 +48,18 @@ class AddQuizActivity : AppCompatActivity(), AddQuizContract.View {
             val option3 = binding.txtOpt3.text.toString()
             val option4 = binding.txtOpt4.text.toString()
 
+            var correctAns = ""
+
+            if (binding.radioOpt1.isChecked) {
+                correctAns = "1"
+            } else if (binding.radioOpt2.isChecked) {
+                correctAns = "2"
+            } else if (binding.radioOpt3.isChecked) {
+                correctAns = "3"
+            } else if (binding.radioOpt4.isChecked) {
+                correctAns = "4"
+            }
+
             if (title.isNotEmpty() || option1.isNotEmpty() || option2.isNotEmpty() || option3.isNotEmpty() || option4.isNotEmpty() || ImageUri != null) {
                 presenter.uploadQuiz(
                     intent,
@@ -56,6 +68,7 @@ class AddQuizActivity : AppCompatActivity(), AddQuizContract.View {
                     option2,
                     option3,
                     option4,
+                    correctAns,
                     ImageUri!!
                 )
             } else {
@@ -111,7 +124,7 @@ class AddQuizActivity : AppCompatActivity(), AddQuizContract.View {
     }
 
     override fun requestStoragePermission() {
-        requestPermission(Manifest.permission.CAMERA, STORAGE_PERMISSION_CODE)
+        requestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, STORAGE_PERMISSION_CODE)
     }
 
     override fun pickImageFromGallery() {

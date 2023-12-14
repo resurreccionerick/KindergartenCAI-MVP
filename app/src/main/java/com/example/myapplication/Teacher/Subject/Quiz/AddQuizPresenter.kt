@@ -28,9 +28,10 @@ class AddQuizPresenter(intent: Intent, subjectId: String, var view: AddQuizActiv
         opt2: String,
         opt3: String,
         opt4: String,
+        correctAns: String,
         selectedImageTitleUri: Uri
     ) {
-        val quiz = Quiz(newVideoId, title, opt1, opt2, opt3, opt4, "")
+        val quiz = Quiz(newVideoId, title, opt1, opt2, opt3, opt4, correctAns, "")
 
         if (selectedImageTitleUri.scheme == "content") {
             // Handle gallery image upload for adding a new subject
@@ -48,6 +49,7 @@ class AddQuizPresenter(intent: Intent, subjectId: String, var view: AddQuizActiv
                     quiz.opt2 = opt2
                     quiz.opt4 = opt3
                     quiz.opt4 = opt4
+                    quiz.correctAns = correctAns
                     quiz.titleImgUrl = imageUrl
                     quizReference.setValue(quiz)
                     view.onQuizUploaded()

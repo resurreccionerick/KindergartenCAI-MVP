@@ -24,19 +24,26 @@
             android:layout_gravity="center"
             android:src="@drawable/baseline_add_24" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="QUESTION DETAILS:"
+            android:textColor="#2196F3"
+            android:textStyle="bold|italic" />
+
         <EditText
             android:id="@+id/txtQuestion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Question here..."
             android:inputType="textMultiLine"
-            android:lines="2" />
+            android:lines="1" />
 
         <EditText
             android:id="@+id/txtOpt1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
             android:hint="Option 1 here..."
             android:inputType="textMultiLine" />
 
@@ -61,12 +68,62 @@
             android:hint="Option 4 here..."
             android:inputType="textMultiLine" />
 
-        <Button
-            android:id="@+id/btnSaveQuiz"
-            android:layout_width="150dp"
+
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="Save" />
+            android:text="CHOOSE THE CORRECT ANSWER:"
+            android:textColor="#2196F3"
+            android:textStyle="bold|italic" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <RadioGroup
+                android:id="@+id/radioGroupOptions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <RadioButton
+                    android:id="@+id/radioOpt1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Option 1" />
+
+                <RadioButton
+                    android:id="@+id/radioOpt2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Option 2" />
+
+                <RadioButton
+                    android:id="@+id/radioOpt3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Option 3" />
+
+                <RadioButton
+                    android:id="@+id/radioOpt4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Option 4" />
+            </RadioGroup>
+
+            <Button
+                android:id="@+id/btnSaveQuiz"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:text="Save" />
+        </LinearLayout>
+
+
     </LinearLayout>
 
     <include

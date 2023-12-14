@@ -7,6 +7,7 @@ data class Quiz(
     var opt2: String,
     var opt3: String,
     var opt4: String,
+    var correctAns: String,
     var titleImgUrl: String
 ) {
 }

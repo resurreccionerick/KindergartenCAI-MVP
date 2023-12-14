@@ -24,8 +24,12 @@ class QuizPresenter(val subjectId: String, val view: TeacherQuizActivity) : Quiz
                     val opt2 = childSnapshot.child("opt2").value.toString()
                     val opt3 = childSnapshot.child("opt3").value.toString()
                     val opt4 = childSnapshot.child("opt4").value.toString()
+                    val correctAns = childSnapshot.child("correctAns").value.toString()
                     val imageUrl = childSnapshot.child("titleImgUrl").value.toString()
-                    val quizModel = Quiz(id, title, opt1, opt2, opt3, opt4, imageUrl)
+                    val quizModel = Quiz(
+                        id, title, opt1, opt2, opt3, opt4,
+                        correctAns, imageUrl
+                    )
                     quiz.add(quizModel)
                 }
                 view.showQuiz(quiz)

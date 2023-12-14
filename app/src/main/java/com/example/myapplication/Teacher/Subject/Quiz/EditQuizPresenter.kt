@@ -29,6 +29,7 @@ class EditQuizPresenter(subjectId: String, quizId: String, var view: EditQuizAct
         opt2: String?,
         opt3: String?,
         opt4: String?,
+        correctAns: String,
         titleImage: Uri?
     ) {
         if (title != null && opt1 != null && opt2 != null && opt3 != null && opt4 != null && titleImage != null) {
@@ -39,11 +40,8 @@ class EditQuizPresenter(subjectId: String, quizId: String, var view: EditQuizAct
                             val currentTitle = dataSnapshot.child("title").value.toString()
                             // Check if the title and image are being changed
                             val isTitleChanged = title != currentTitle
-                            val isImageChanged = titleImage != null
-                            Log.d("Erick", title + " " + currentTitle)
 
                             if (isTitleChanged) {
-                                //if (isImageChanged) {
                                 // Upload the new image to Firebase Storage
                                 val imageRef: StorageReference =
                                     storageReference.child("quiz_images/$quizId.jpg")
@@ -61,6 +59,7 @@ class EditQuizPresenter(subjectId: String, quizId: String, var view: EditQuizAct
                                                 opt2.toString(),
                                                 opt3.toString(),
                                                 opt4.toString(),
+                                                correctAns,
                                                 newImageUrl
                                             )
                                             databaseReference.setValue(quiz)
@@ -69,7 +68,6 @@ class EditQuizPresenter(subjectId: String, quizId: String, var view: EditQuizAct
                                         }
                                     }
                                 }
-                                //}
                             }
                         } else {
                             view.showErrorMessage("Error: Subject not found")

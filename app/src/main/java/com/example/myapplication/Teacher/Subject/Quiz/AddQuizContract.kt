@@ -22,6 +22,7 @@ interface AddQuizContract {
             opt2: String,
             opt3: String,
             opt4: String,
+            correctAns: String,
             imgTitleUrl: Uri
         )
 

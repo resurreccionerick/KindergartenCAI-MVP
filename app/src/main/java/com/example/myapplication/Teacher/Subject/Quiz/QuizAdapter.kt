@@ -33,21 +33,6 @@ class QuizAdapter(
             binding.fabSubjEdit.setOnClickListener {
                 onEditClick(quiz)
             }
-
-
-//            binding.fabSubjEdit.setOnClickListener {
-//                val intent = Intent(binding.root.context, EditQuizActivity::class.java)
-//                intent.putExtra("quizId", quiz.id)
-//                intent.putExtra("quizTitle", quiz.title)
-//                intent.putExtra("quizImgTitle", quiz.titleImgUrl)
-//                intent.putExtra("quizOpt1", quiz.opt1)
-//                intent.putExtra("quizOpt2", quiz.opt2)
-//                intent.putExtra("quizOpt3", quiz.opt3)
-//                intent.putExtra("quizOpt4", quiz.opt4)
-//
-//                Log.d("ID QuizAdapter", "QuizAdapter " + quiz.id.toString())
-//                binding.root.context.startActivity(intent)
-//            }
         }
     }
 

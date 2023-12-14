@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import com.example.myapplication.R
 import com.example.myapplication.Student.Subject.Audio.AudioActivity
+import com.example.myapplication.Student.Subject.Quiz.QuizActivity
 import com.example.myapplication.Student.Subject.Video.VideoActivity
 import com.example.myapplication.databinding.ActivityPickLessonBinding
 
@@ -26,6 +27,12 @@ class PickLessonActivity : AppCompatActivity() {
 
         binding.btnPickSound.setOnClickListener {
             val intent = Intent(binding.root.context, AudioActivity::class.java)
+            intent.putExtra("subjectID", subjID)
+            binding.root.context.startActivity(intent)
+        }
+
+        binding.btnPickQuiz.setOnClickListener {
+            val intent = Intent(binding.root.context, QuizActivity::class.java)
             intent.putExtra("subjectID", subjID)
             binding.root.context.startActivity(intent)
         }

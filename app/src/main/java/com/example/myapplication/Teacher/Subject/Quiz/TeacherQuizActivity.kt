@@ -47,6 +47,7 @@ class TeacherQuizActivity : AppCompatActivity(), QuizContract.View {
                 intent.putExtra("quizOpt2", quiz.opt2)
                 intent.putExtra("quizOpt3", quiz.opt3)
                 intent.putExtra("quizOpt4", quiz.opt4)
+                intent.putExtra("correctAns", quiz.correctAns)
                 startActivity(intent)
             }
         )

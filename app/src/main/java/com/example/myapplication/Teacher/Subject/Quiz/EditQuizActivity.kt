@@ -6,7 +6,6 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
-import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
@@ -42,21 +41,33 @@ class EditQuizActivity : AppCompatActivity(), EditQuizContract.View {
         val quizOpt2 = intent.getStringExtra("quizOpt2")
         val quizOpt3 = intent.getStringExtra("quizOpt3")
         val quizOpt4 = intent.getStringExtra("quizOpt4")
+        val correctAns = intent.getStringExtra("correctAns")
 
         presenter = EditQuizPresenter(subjectId.toString(), quizId.toString(), this)
 
         // Convert the subjectImg string to a Uri
         val subjectImgUri: Uri? = quizImgTitle?.let { Uri.parse(it) }
 
-        setQuizDetails(quizTitle, subjectImgUri, quizOpt1, quizOpt2, quizOpt3, quizOpt4)
+        setQuizDetails(quizTitle, subjectImgUri, quizOpt1, quizOpt2, quizOpt3, quizOpt4, correctAns)
 
         binding.imgTitle.setOnClickListener {
             showImageSourceDialog()
         }
 
         binding.btnUpdateQuiz.setOnClickListener {
+            var correctAns = ""
             binding.btnUpdateQuiz.visibility = View.GONE
             binding.progressDialog.progressBarLoading.visibility = View.VISIBLE
+
+            if (binding.radioOpt1.isChecked) {
+                correctAns = "1"
+            } else if (binding.radioOpt2.isChecked) {
+                correctAns = "2"
+            } else if (binding.radioOpt3.isChecked) {
+                correctAns = "3"
+            } else if (binding.radioOpt4.isChecked) {
+                correctAns = "4"
+            }
 
             presenter.uploadEditQuiz(
                 intent,
@@ -66,6 +77,7 @@ class EditQuizActivity : AppCompatActivity(), EditQuizContract.View {
                 binding.txtOpt2.text.toString(),
                 binding.txtOpt3.text.toString(),
                 binding.txtOpt4.text.toString(),
+                correctAns,
                 ImageUri
             )
         }
@@ -104,7 +116,8 @@ class EditQuizActivity : AppCompatActivity(), EditQuizContract.View {
         quizOpt1: String?,
         quizOpt2: String?,
         quizOpt3: String?,
-        quizOpt4: String?
+        quizOpt4: String?,
+        correctAns: String?,
     ) {
         Picasso.get().load(quizImgTitle).into(binding.imgTitle)
 
@@ -113,6 +126,24 @@ class EditQuizActivity : AppCompatActivity(), EditQuizContract.View {
         binding.txtOpt2.setText(quizOpt2)
         binding.txtOpt3.setText(quizOpt3)
         binding.txtOpt4.setText(quizOpt4)
+
+        when (correctAns) {
+            "1" -> {
+                binding.radioOpt1.isChecked = true
+            }
+
+            "2" -> {
+                binding.radioOpt2.isChecked = true
+            }
+
+            "3" -> {
+                binding.radioOpt3.isChecked = true
+            }
+
+            "4" -> {
+                binding.radioOpt4.isChecked = true
+            }
+        }
     }
 
     override fun showSuccessMessage(message: String) {
