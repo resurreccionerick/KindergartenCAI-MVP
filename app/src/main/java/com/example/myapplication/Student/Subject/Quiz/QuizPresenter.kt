@@ -65,10 +65,6 @@ class QuizPresenter(val view: QuizActivity, subjId: String) : QuizContract.Prese
         Handler().postDelayed({
             if (currentQuestionIndex < quizList.size) {
                 view.showQuizQuestion(quizList[currentQuestionIndex] , currentQuestionIndex+1, quizList.size)
-
-            } else {
-
-                view.finishQuiz() // Notify the activity to finish
             }
         }, 500) // delay time
     }
@@ -89,7 +85,7 @@ class QuizPresenter(val view: QuizActivity, subjId: String) : QuizContract.Prese
             loadQuizQuestion()
         } else {
             //view.showMessage("Quiz completed!")
-            view.finishQuiz() // Notify the activity to finish
+            view.finishQuiz(score.toString()) // Notify the activity to finish
         }
     }
 

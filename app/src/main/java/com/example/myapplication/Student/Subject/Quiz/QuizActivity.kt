@@ -1,10 +1,12 @@
 package com.example.myapplication.Student.Subject.Quiz
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.core.view.isVisible
 import com.example.myapplication.Models.Question
+import com.example.myapplication.Teacher.Subject.Quiz.Result.QuizResultActivity
 
 import com.example.myapplication.databinding.ActivityQuizBinding
 import com.squareup.picasso.Picasso
@@ -42,7 +44,7 @@ class QuizActivity : AppCompatActivity(), QuizContract.View {
         var quizIndex = "$currentQuestionIndex/$quizSize"
 
         // Animate the visibility of the index
-        binding.txtIndex.setText(quizIndex)
+        binding.txtIndex.text = quizIndex
         binding.txtIndex.animate()
             .alpha(1f)
             .setDuration(500)
@@ -110,7 +112,10 @@ class QuizActivity : AppCompatActivity(), QuizContract.View {
         showToast(message)
     }
 
-    override fun finishQuiz() {
+    override fun finishQuiz(quizScore: String) {
+        val intent = Intent(this, QuizResultActivity::class.java)
+        intent.putExtra("quizScore", quizScore) // Pass the score
+        startActivity(intent)
         finish()
     }
 

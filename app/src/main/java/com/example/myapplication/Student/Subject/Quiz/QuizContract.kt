@@ -7,7 +7,7 @@ interface QuizContract {
         fun showQuizQuestion(question: Question, currentQuestionIndex: Int, quizSize: Int)
         fun showQuizResult(isCorrect: Boolean, score: Int)
         fun showMessage(message: String)
-        fun finishQuiz()
+        fun finishQuiz(quizScore:String)
     }
 
     interface Presenter {
