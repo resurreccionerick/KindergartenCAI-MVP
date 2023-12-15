@@ -24,6 +24,8 @@ class StudentDashboardActivity : AppCompatActivity(), StudentDashboardContract.V
 
         presenter = StudentDashboardPresenter(this)
 
+        binding
+
         binding.btnLessonMain.setOnClickListener {
             startActivity(Intent(this@StudentDashboardActivity, SubjectActivity::class.java))
         }

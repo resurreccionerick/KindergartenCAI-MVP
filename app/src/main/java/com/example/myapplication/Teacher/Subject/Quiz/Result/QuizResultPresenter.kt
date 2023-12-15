@@ -1,45 +1,60 @@
 package com.example.myapplication.Teacher.Subject.Quiz.Result
 
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.database.*
 
 class QuizResultPresenter(var view: QuizResultActivity) : QuizResultContract.Presenter {
     private val auth = FirebaseAuth.getInstance()
-    private val firebaseFirestore = FirebaseFirestore.getInstance()
+    private val databaseReference =
+        FirebaseDatabase.getInstance().getReference("Users").child(
+            auth.currentUser!!.uid
+        )
 
-    override fun saveQuizOnDatabase(score: String) {
-        if (score.isNotEmpty()) {
-            // Use the current user's UID as the document ID
-            val userDocument =
-                firebaseFirestore.collection("Users").document(auth.currentUser!!.uid)
+    override fun saveQuizOnDatabase(newScore: String) {
+        // Retrieve the current score from the database
+        databaseReference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    val currentScore = dataSnapshot.child("score").getValue(String::class.java)
 
-            userDocument.get()
-                .addOnSuccessListener { documentSnapshot ->
-                    if (documentSnapshot.exists()) {
-                        // Get the current quizResults value from the document
-                        val quizResults = documentSnapshot.get("quizResults")
+                    // Add the new score to the current score
+                    val totalScore = (currentScore?.toInt() ?: 0) + newScore.toInt()
 
-                        // Update the quizResults value with the new score
-                        val newResult = (quizResults as? Number)?.toLong()?.plus(score.toInt()) ?: 0
+                    // Update the value in the database including the name
+                    val scoreMap = HashMap<String, Any>()
+                    scoreMap["score"] = totalScore.toString()
+                    scoreMap["email"] = auth.currentUser!!.email.toString()
 
-                        // Update the "quizResults" field within the user's document
-                        userDocument.update("quizResults", newResult)
-                            .addOnSuccessListener {
-                                view.finishSave()
-                                view.showMessage("Quiz result saved successfully!")
-                            }
-                            .addOnFailureListener {
-                                view.showMessage("Failed to save quiz result. Please try again.")
-                            }
-                    } else {
-                        view.showMessage("User document not found")
-                    }
+                    databaseReference.setValue(scoreMap)
+                        .addOnSuccessListener {
+                            view.finishSave()
+                            view.showMessage("Quiz result saved successfully!")
+                        }
+                        .addOnFailureListener {
+                            view.showMessage("Failed to save quiz result. Please try again.")
+                        }
+                } else {
+                    // If there is no existing score, set the new score directly
+                    val scoreMap = HashMap<String, Any>()
+                    scoreMap["score"] = newScore
+                    scoreMap["email"] = auth.currentUser!!.email.toString()
+
+                    databaseReference.setValue(scoreMap)
+                        .addOnSuccessListener {
+                            view.finishSave()
+                            view.showMessage("Quiz result saved successfully!")
+                        }
+                        .addOnFailureListener {
+                            view.showMessage("Failed to save quiz result. Please try again.")
+                        }
                 }
-                .addOnFailureListener {
-                    view.showMessage("Failed to fetch user document. Please try again.")
-                }
-        } else {
-            view.showMessage("Score is empty.")
-        }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Handle errors here
+                view.showMessage("Error retrieving current score. Please try again.")
+            }
+        })
     }
 }
+

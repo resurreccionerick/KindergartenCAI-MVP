@@ -24,6 +24,15 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
+            android:name=".Teacher.Leaderboards.LeaderboardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Teacher.Subject.Quiz.Result.QuizResultActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Student.Subject.Quiz.QuizActivity"
+            android:exported="false" />
+        <activity
             android:name=".Teacher.Subject.Audio.EditAudioActivity"
             android:exported="false" />
         <activity
@@ -76,7 +85,7 @@
             android:exported="false" />
         <activity
             android:name=".Teacher.Teacher_Dashboard.TeacherDashboardActivity"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -88,7 +97,9 @@
             android:exported="false" />
         <activity
             android:name=".Student.Student_Dashboard.StudentDashboardActivity"
-            android:exported="false"></activity>
+            android:exported="false">
+
+        </activity>
         <activity
             android:name=".Register.RegisterActivity"
             android:exported="false" />

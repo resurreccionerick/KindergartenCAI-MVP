@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_margin="16dp"
-        android:background="#FF5722"
+        android:background="#F44336"
         android:lines="2"
         android:shadowColor="#03A9F4"
         android:shadowDx="4"
@@ -28,13 +28,12 @@
         android:textColor="#fff"
         android:textSize="22sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/btnLeaderboards" />
 
     <Button
-        android:id="@+id/btnQuiz"
+        android:id="@+id/btnLeaderboards"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_margin="16dp"
@@ -48,10 +47,10 @@
         android:textColor="#fff"
         android:textSize="22sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnAddSubj" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <ImageView
         android:id="@+id/imageView"

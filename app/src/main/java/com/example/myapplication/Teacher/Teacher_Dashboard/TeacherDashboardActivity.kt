@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import com.example.myapplication.Login.LoginActivity
 import com.example.myapplication.R
+import com.example.myapplication.Teacher.Leaderboards.LeaderboardActivity
 import com.example.myapplication.Teacher.Subject.SubjectActivity
 import com.example.myapplication.databinding.ActivityTeacherDashboardBinding
 
@@ -23,6 +24,12 @@ class TeacherDashboardActivity : AppCompatActivity(), TeacherDashboardContract.V
         setContentView(binding.root)
 
         presenter = TeacherDashboardPresenter(this)
+
+        binding. btnLeaderboards.setOnClickListener {
+            val intent = Intent(this@TeacherDashboardActivity, LeaderboardActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
 
         binding.btnAddSubj.setOnClickListener {
             val intent = Intent(this@TeacherDashboardActivity, SubjectActivity::class.java)
