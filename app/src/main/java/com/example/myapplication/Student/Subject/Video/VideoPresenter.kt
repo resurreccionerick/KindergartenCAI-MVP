@@ -1,6 +1,5 @@
 package com.example.myapplication.Student.Subject.Video
 
-import android.util.Log
 import com.example.myapplication.Models.Video
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -20,13 +19,17 @@ class VideoPresenter(var view: VideoActivity) : VideoContract.Presenter {
                     val title = childSnapshot.child("title").value.toString()
                     val videoUrl = childSnapshot.child("videoUrl").value.toString()
                     val subject = Video(id, title, videoUrl)
-                    Log.d(
-                        "id Erick",
-                        id.toString() + " " + title.toString() + " " + videoUrl.toString() + " " + subject.toString()
-                    )
+
                     video.add(subject)
                 }
-                view.showVideo(video)
+                // Check if the video list is not null or empty before showing it
+                if (video.isNotEmpty()) {
+                    view.showVideo(video)
+                } else {
+                    // If video list is null or empty, show a toast
+                    view.finish()
+                    view.showErrorMessage("No Videos Yet")
+                }
             }
 
             override fun onCancelled(databaseError: DatabaseError) {

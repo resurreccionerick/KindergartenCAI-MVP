@@ -7,7 +7,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
-class AudioPresenter(val view: AudioActivity): AudioContract.Presenter {
+class AudioPresenter(val view: AudioActivity) : AudioContract.Presenter {
     override fun loadAudio(id: String) {
         val databaseReference =
             FirebaseDatabase.getInstance().getReference("Subjects").child(id).child("Audio")
@@ -20,11 +20,17 @@ class AudioPresenter(val view: AudioActivity): AudioContract.Presenter {
                     val title = childSnapshot.child("title").value.toString()
                     val audioUrl = childSnapshot.child("audioUrl").value.toString()
                     val audioPic = childSnapshot.child("audioPic").value.toString()
-                    val values = Audio(id, title,audioPic,audioUrl)
+                    val values = Audio(id, title, audioPic, audioUrl)
 
                     audio.add(values)
                 }
-                view.showAudio(audio)
+
+                if (audio.isNotEmpty()) {
+                    view.showAudio(audio)
+                } else {
+                    view.finish()
+                    view.showMessage("No Audio Yet")
+                }
             }
 
             override fun onCancelled(databaseError: DatabaseError) {

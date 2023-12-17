@@ -186,4 +186,9 @@ class EditSubjectActivity : AppCompatActivity(), EditSubjectContract.View {
     override fun showErrorMessage(message: String) {
         showToast(message)
     }
+
+    override fun onBackPressed() {
+        startActivity(Intent(this, SubjectActivity::class.java))
+        finish()
+    }
 }

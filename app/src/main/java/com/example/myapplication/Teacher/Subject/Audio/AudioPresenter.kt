@@ -23,7 +23,12 @@ class AudioPresenter(var view: AudioActivity) : AddAudioContract.AudioPresenter 
 
                     audio.add(values)
                 }
-                view.showAudio(audio)
+                if (audio.isNotEmpty()) {
+                    view.showAudio(audio)
+                } else {
+                    view.showMessage("No Audio Yet")
+                }
+
             }
 
             override fun onCancelled(databaseError: DatabaseError) {

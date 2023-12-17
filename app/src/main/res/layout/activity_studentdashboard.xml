@@ -10,11 +10,30 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/tbTcherDashboard"
         android:layout_width="0dp"
-        app:title=" "
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:title=" " />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/txtScore"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:background="#FF5722"
+        android:lines="2"
+        android:padding="5dp"
+        android:shadowColor="#FF5722"
+        android:shadowDx="4"
+        android:shadowDy="4"
+        android:shadowRadius="4"
+        android:text="Your Score: --- "
+        android:textColor="#fff"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/btnLinearLayout"
+        app:layout_constraintEnd_toEndOf="@+id/btnLinearLayout"
+        app:layout_constraintStart_toStartOf="@+id/btnLinearLayout" />
 
     <LinearLayout
         android:id="@+id/btnLinearLayout"
@@ -34,7 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_margin="16dp"
-            android:background="#2F58D8"
+            android:background="#3F51B5"
             android:lines="2"
             android:shadowColor="#FF5722"
             android:shadowDx="4"

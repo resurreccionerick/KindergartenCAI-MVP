@@ -30,8 +30,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:background="#f2f2f2"
+                android:orientation="horizontal"
                 android:padding="8dp">
 
                 <TextView
@@ -59,6 +59,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="end"
+                    android:layout_margin="2dp"
                     android:background="#E91E1E"
                     android:padding="5dp"
                     android:src="@drawable/baseline_delete_24"

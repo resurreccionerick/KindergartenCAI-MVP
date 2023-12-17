@@ -1,10 +1,12 @@
 package com.example.myapplication.Student.Subject.Video
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.Models.Video
+import com.example.myapplication.Student.Subject.PickLessonActivity
 import com.example.myapplication.databinding.ActivityVideo2Binding
 
 class VideoActivity : AppCompatActivity(), VideoContract.View {
@@ -29,8 +31,8 @@ class VideoActivity : AppCompatActivity(), VideoContract.View {
         presenter.loadVideo(subjID.toString())
     }
 
-    override fun showVideo(subjects: List<Video>) {
-        adapter.updateData(subjects)
+    override fun showVideo(video: List<Video>) {
+        adapter.updateData(video)
     }
 
     override fun showErrorMessage(message: String) {
@@ -43,5 +45,10 @@ class VideoActivity : AppCompatActivity(), VideoContract.View {
 
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onBackPressed() {
+        startActivity(Intent(this, PickLessonActivity::class.java))
+        finish()
     }
 }

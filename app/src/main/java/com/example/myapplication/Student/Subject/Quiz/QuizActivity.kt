@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.core.view.isVisible
 import com.example.myapplication.Models.Question
+import com.example.myapplication.Student.Subject.PickLessonActivity
 import com.example.myapplication.Teacher.Subject.Quiz.Result.QuizResultActivity
 
 import com.example.myapplication.databinding.ActivityQuizBinding
@@ -24,9 +25,6 @@ class QuizActivity : AppCompatActivity(), QuizContract.View {
 
         presenter = QuizPresenter(this, subjID.toString())
 
-        // Load the first quiz question
-        presenter.loadQuizQuestion()
-
         binding.btnNext.setOnClickListener {
             if (binding.radioBtn1.isChecked) {
                 presenter.checkAnswer(1)
@@ -38,6 +36,9 @@ class QuizActivity : AppCompatActivity(), QuizContract.View {
                 presenter.checkAnswer(4)
             }
         }
+
+        // Load the first quiz question
+        presenter.loadQuizQuestion()
     }
 
     override fun showQuizQuestion(question: Question, currentQuestionIndex: Int, quizSize: Int) {
@@ -122,5 +123,10 @@ class QuizActivity : AppCompatActivity(), QuizContract.View {
 
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onBackPressed() {
+        startActivity(Intent(this, PickLessonActivity::class.java))
+        finish()
     }
 }

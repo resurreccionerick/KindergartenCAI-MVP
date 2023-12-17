@@ -13,6 +13,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import com.example.myapplication.R
+import com.example.myapplication.Teacher.Subject.SubjectActivity
 import com.example.myapplication.Teacher.Teacher_Dashboard.TeacherDashboardActivity
 import com.example.myapplication.databinding.ActivityAddAudioBinding
 import java.io.ByteArrayOutputStream
@@ -180,5 +181,10 @@ class AddAudioActivity : AppCompatActivity(), AddAudioContract.AddAudioView {
 
     private fun requestPermission(permission: String, requestCode: Int) {
         ActivityCompat.requestPermissions(this, arrayOf(permission), requestCode)
+    }
+
+    override fun onBackPressed() {
+        startActivity(Intent(this, SubjectActivity::class.java))
+        finish()
     }
 }

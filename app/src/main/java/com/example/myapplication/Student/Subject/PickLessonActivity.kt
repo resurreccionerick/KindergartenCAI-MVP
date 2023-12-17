@@ -37,4 +37,9 @@ class PickLessonActivity : AppCompatActivity() {
             binding.root.context.startActivity(intent)
         }
     }
+
+    override fun onBackPressed() {
+        startActivity(Intent(this, SubjectActivity::class.java))
+        finish()
+    }
 }

@@ -13,6 +13,8 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import com.example.myapplication.R
+import com.example.myapplication.Teacher.Subject.AddLessonActivity
+import com.example.myapplication.Teacher.Subject.SubjectActivity
 import com.example.myapplication.Teacher.Teacher_Dashboard.TeacherDashboardActivity
 import com.example.myapplication.databinding.ActivityEditAudioBinding
 import com.squareup.picasso.Picasso
@@ -187,5 +189,10 @@ class EditAudioActivity : AppCompatActivity(), EditAudioContract.View {
             val audioName = data.data?.lastPathSegment
             binding.btnEditAudio.text = audioName
         }
+    }
+
+    override fun onBackPressed() {
+        startActivity(Intent(this, SubjectActivity::class.java))
+        finish()
     }
 }

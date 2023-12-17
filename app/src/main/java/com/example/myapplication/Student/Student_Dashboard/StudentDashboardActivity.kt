@@ -1,21 +1,25 @@
 package com.example.myapplication.Student.Student_Dashboard
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.example.myapplication.Login.LoginActivity
+import com.example.myapplication.Models.User
 import com.example.myapplication.R
+import com.example.myapplication.Student.Leaderboards.LeaderboardContract
+import com.example.myapplication.Student.Leaderboards.LeaderboardPresenter
 import com.example.myapplication.Student.Subject.SubjectActivity
-import com.example.myapplication.Teacher.Teacher_Dashboard.TeacherDashboardActivity
 import com.example.myapplication.databinding.ActivityStudentdashboardBinding
 
-class StudentDashboardActivity : AppCompatActivity(), StudentDashboardContract.View {
+class StudentDashboardActivity : AppCompatActivity(), StudentDashboardContract.View,
+    LeaderboardContract.View {
     private lateinit var binding: ActivityStudentdashboardBinding
     private lateinit var presenter: StudentDashboardPresenter
+    private lateinit var leaderboardPresenter: LeaderboardPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,12 +27,13 @@ class StudentDashboardActivity : AppCompatActivity(), StudentDashboardContract.V
         setContentView(binding.root)
 
         presenter = StudentDashboardPresenter(this)
-
-        binding
+        leaderboardPresenter = LeaderboardPresenter(this)
 
         binding.btnLessonMain.setOnClickListener {
             startActivity(Intent(this@StudentDashboardActivity, SubjectActivity::class.java))
         }
+
+        leaderboardPresenter.loadScore()
 
         val toolbar: Toolbar = findViewById(R.id.tbTcherDashboard)
         setSupportActionBar(toolbar) // Set the toolbar as the support action bar
@@ -63,6 +68,10 @@ class StudentDashboardActivity : AppCompatActivity(), StudentDashboardContract.V
 
     override fun goToProfile() {
         TODO("Not yet implemented")
+    }
+
+    override fun setData(user: List<User>) {
+        binding.txtScore.text = "Your Score: " + user[0].userScore
     }
 
     override fun showMessage(message: String) {

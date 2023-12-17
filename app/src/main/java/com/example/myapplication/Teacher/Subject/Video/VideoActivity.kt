@@ -7,6 +7,8 @@ import android.util.Log
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.Models.Video
+import com.example.myapplication.Teacher.Subject.AddLessonActivity
+import com.example.myapplication.Teacher.Subject.SubjectActivity
 import com.example.myapplication.databinding.ActivityVideoBinding
 
 class VideoActivity : AppCompatActivity(), VideoContract.View {
@@ -67,5 +69,10 @@ class VideoActivity : AppCompatActivity(), VideoContract.View {
 
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onBackPressed() {
+        startActivity(Intent(this, SubjectActivity::class.java))
+        finish()
     }
 }

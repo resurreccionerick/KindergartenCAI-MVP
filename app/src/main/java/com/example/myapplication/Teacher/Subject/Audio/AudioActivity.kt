@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.Models.Audio
 import com.example.myapplication.R
+import com.example.myapplication.Teacher.Subject.AddLessonActivity
+import com.example.myapplication.Teacher.Subject.SubjectActivity
 import com.example.myapplication.Teacher.Subject.Video.AddVideoActivity
 import com.example.myapplication.Teacher.Subject.Video.EditVideoActivity
 import com.example.myapplication.Teacher.Teacher_Dashboard.TeacherDashboardActivity
@@ -71,5 +73,8 @@ class AudioActivity : AppCompatActivity(), AddAudioContract.AudioView {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
-
+    override fun onBackPressed() {
+        startActivity(Intent(this, SubjectActivity::class.java))
+        finish()
+    }
 }

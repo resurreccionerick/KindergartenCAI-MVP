@@ -14,6 +14,8 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import com.example.myapplication.R
+import com.example.myapplication.Teacher.Subject.AddLessonActivity
+import com.example.myapplication.Teacher.Subject.SubjectActivity
 import com.example.myapplication.Teacher.Teacher_Dashboard.TeacherDashboardActivity
 import com.example.myapplication.databinding.ActivityEditVideoBinding
 
@@ -41,7 +43,6 @@ class EditVideoActivity : AppCompatActivity(), EditVideoContract.View {
         val videoToUri: Uri? = vidImgUri?.let { Uri.parse(it) }
         setVideoDetails(vidId, vidTitle, videoToUri)
 
-        //Log.d("ID ERICK", "AddVideoActivity subjID " + subjectId.toString())
         presenter = EditVideoPresenter(this, subjectId.toString())
 
         binding.fabAddVideo.setOnClickListener {
@@ -60,12 +61,7 @@ class EditVideoActivity : AppCompatActivity(), EditVideoContract.View {
 
             binding.fabAddVideo.visibility = View.GONE
 
-            Log.d(
-                "ID ERICK",
-                "AddVideoActivity " + binding.txtVideoTitle.text.toString() + " " + vidId.toString()
-            )
             if (vidTitle == binding.txtVideoTitle.text.toString()) {
-
                 presenter.uploadEditVideo(intent, vidId, vidTitle, videoUri)
             } else {
                 presenter.uploadEditVideo(
@@ -178,5 +174,10 @@ class EditVideoActivity : AppCompatActivity(), EditVideoContract.View {
             View.GONE // Show the progress bar
 
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onBackPressed() {
+        startActivity(Intent(this, SubjectActivity::class.java))
+        finish()
     }
 }

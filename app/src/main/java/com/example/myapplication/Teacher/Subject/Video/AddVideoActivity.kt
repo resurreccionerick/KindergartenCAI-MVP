@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.example.myapplication.R
+import com.example.myapplication.Teacher.Subject.SubjectActivity
 import com.example.myapplication.Teacher.Teacher_Dashboard.TeacherDashboardActivity
 import com.example.myapplication.databinding.ActivityAddVideoBinding
 
@@ -151,5 +152,10 @@ class AddVideoActivity : AppCompatActivity(), AddVideoContract.View {
         binding.progressDialog.progressBarLoading.visibility = View.GONE // Show the progress bar
 
         showToast(message)
+    }
+
+    override fun onBackPressed() {
+        startActivity(Intent(this, SubjectActivity::class.java))
+        finish()
     }
 }

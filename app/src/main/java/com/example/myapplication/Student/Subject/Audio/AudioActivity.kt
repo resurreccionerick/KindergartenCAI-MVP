@@ -1,5 +1,6 @@
 package com.example.myapplication.Student.Subject.Audio
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -8,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.Models.Audio
 import com.example.myapplication.Models.Video
 import com.example.myapplication.R
+import com.example.myapplication.Student.Subject.PickLessonActivity
 import com.example.myapplication.Student.Subject.SubjectAdapter
 import com.example.myapplication.databinding.ActivityAudio2Binding
 
@@ -46,5 +48,10 @@ class AudioActivity : AppCompatActivity(), AudioContract.View {
 
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onBackPressed() {
+        startActivity(Intent(this, PickLessonActivity::class.java))
+        finish()
     }
 }

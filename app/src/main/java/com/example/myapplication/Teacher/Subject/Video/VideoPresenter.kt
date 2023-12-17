@@ -21,13 +21,14 @@ class VideoPresenter(private var view: VideoActivity) : VideoContract.Presenter 
                     val title = childSnapshot.child("title").value.toString()
                     val videoUrl = childSnapshot.child("videoUrl").value.toString()
                     val subject = Video(id, title, videoUrl)
-                    Log.d(
-                        "id Erick",
-                        id.toString() + " " + title.toString() + " " + videoUrl.toString() + " " + subject.toString()
-                    )
+
                     video.add(subject)
                 }
-                view.showVideo(video)
+                if (video.isNotEmpty()) {
+                    view.showVideo(video)
+                } else {
+                    view.showErrorMessage("No Videos Yet")
+                }
             }
 
             override fun onCancelled(databaseError: DatabaseError) {

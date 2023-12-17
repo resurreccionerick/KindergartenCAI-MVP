@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.Models.Quiz
 import com.example.myapplication.Models.Subject
 import com.example.myapplication.Teacher.Subject.EditSubjectActivity
+import com.example.myapplication.Teacher.Subject.SubjectActivity
 import com.example.myapplication.databinding.ActivityTeacherQuizBinding
 
 class TeacherQuizActivity : AppCompatActivity(), QuizContract.View {
@@ -75,5 +76,10 @@ class TeacherQuizActivity : AppCompatActivity(), QuizContract.View {
 
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onBackPressed() {
+        startActivity(Intent(this, SubjectActivity::class.java))
+        finish()
     }
 }

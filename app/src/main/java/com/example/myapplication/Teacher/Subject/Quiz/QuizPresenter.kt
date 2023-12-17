@@ -30,7 +30,11 @@ class QuizPresenter(val subjectId: String, val view: TeacherQuizActivity) : Quiz
                         id, title, opt1, opt2, opt3, opt4,
                         correctAns, imageUrl
                     )
-                    quiz.add(quizModel)
+                    if (quiz.isNotEmpty()) {
+                        quiz.add(quizModel)
+                    } else {
+                        view.showMessage("No Quiz Yet")
+                    }
                 }
                 view.showQuiz(quiz)
             }

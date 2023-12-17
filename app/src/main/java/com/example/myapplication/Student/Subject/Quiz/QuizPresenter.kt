@@ -51,8 +51,15 @@ class QuizPresenter(val view: QuizActivity, subjId: String) : QuizContract.Prese
                         )
                     )
                 }
-                quizList.addAll(questions)
-                callback.onQuizFetched() // Notify that questions are fetched
+
+                if (questions.isNotEmpty()) {
+                    quizList.addAll(questions)
+                    callback.onQuizFetched() // Notify that questions are fetched
+                } else {
+                    view.finish()
+                    view.showMessage("No Quiz Yet")
+                }
+
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
@@ -64,7 +71,11 @@ class QuizPresenter(val view: QuizActivity, subjId: String) : QuizContract.Prese
     override fun loadQuizQuestion() {
         Handler().postDelayed({
             if (currentQuestionIndex < quizList.size) {
-                view.showQuizQuestion(quizList[currentQuestionIndex] , currentQuestionIndex+1, quizList.size)
+                view.showQuizQuestion(
+                    quizList[currentQuestionIndex],
+                    currentQuestionIndex + 1,
+                    quizList.size
+                )
             }
         }, 500) // delay time
     }

@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.Models.Subject
+import com.example.myapplication.Student.Student_Dashboard.StudentDashboardActivity
 import com.example.myapplication.Student.Subject.SubjectAdapter
 import com.example.myapplication.databinding.ActivitySubjectBinding
 
@@ -48,5 +49,10 @@ class SubjectActivity : AppCompatActivity(), SubjectContract.View {
 
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onBackPressed() {
+        startActivity(Intent(this, StudentDashboardActivity::class.java))
+        finish()
     }
 }

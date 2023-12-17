@@ -12,6 +12,8 @@ import android.provider.MediaStore
 import android.view.View
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import com.example.myapplication.Teacher.Subject.AddLessonActivity
+import com.example.myapplication.Teacher.Subject.SubjectActivity
 import com.example.myapplication.Teacher.Teacher_Dashboard.TeacherDashboardActivity
 import com.example.myapplication.databinding.ActivityEditQuizBinding
 import com.squareup.picasso.Picasso
@@ -216,5 +218,10 @@ class EditQuizActivity : AppCompatActivity(), EditQuizContract.View {
 
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onBackPressed() {
+        startActivity(Intent(this, SubjectActivity::class.java))
+        finish()
     }
 }
