@@ -1,4 +1,4 @@
-package com.example.myapplication.Register
+package com.example.myapplication.Login.Register
 
 interface RegisterContract {
 

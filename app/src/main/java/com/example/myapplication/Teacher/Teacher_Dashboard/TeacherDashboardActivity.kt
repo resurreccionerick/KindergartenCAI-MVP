@@ -49,11 +49,11 @@ class TeacherDashboardActivity : AppCompatActivity(), TeacherDashboardContract.V
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.itemProfile -> {
-                // Handle action_item1 click
-                //presenter.onItem1Clicked() // Notify presenter about the action
-                return true
-            }
+//            R.id.itemProfile -> {
+//                // Handle action_item1 click
+//                //presenter.onItem1Clicked() // Notify presenter about the action
+//                return true
+//            }
 
             R.id.itemLogout -> {
                 // Handle action_item2 click

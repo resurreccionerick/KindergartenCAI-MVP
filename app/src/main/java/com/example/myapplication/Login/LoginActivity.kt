@@ -4,9 +4,10 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import com.example.myapplication.Login.Forgot.ForgotPassActivity
 
 import com.example.myapplication.databinding.ActivityMainBinding
-import com.example.myapplication.Register.RegisterActivity
+import com.example.myapplication.Login.Register.RegisterActivity
 import com.example.myapplication.Student.Student_Dashboard.StudentDashboardActivity
 import com.example.myapplication.Teacher.Teacher_Dashboard.TeacherDashboardActivity
 
@@ -40,6 +41,10 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
         binding.btnRegisterLogin.setOnClickListener {
             startActivity(Intent(this@LoginActivity, RegisterActivity::class.java))
         }
+
+        binding.btnForgotPass.setOnClickListener {
+            startActivity(Intent(this@LoginActivity, ForgotPassActivity::class.java))
+        }
     }
 
 
@@ -65,5 +70,10 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
     override fun autoLogin(message: String) {
         startActivity(Intent(this@LoginActivity, StudentDashboardActivity::class.java))
         showToast(message)
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
     }
 }

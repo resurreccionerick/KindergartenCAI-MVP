@@ -24,6 +24,9 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
+            android:name=".Login.Forgot.ForgotPassActivity"
+            android:exported="false" />
+        <activity
             android:name=".Teacher.Leaderboards.LeaderboardActivity"
             android:exported="false" />
         <activity
@@ -82,10 +85,7 @@
             android:exported="false" />
         <activity
             android:name=".Student.SplashScreenActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Teacher.Teacher_Dashboard.TeacherDashboardActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -93,15 +93,16 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".Teacher.Teacher_Dashboard.TeacherDashboardActivity"
+            android:exported="false"></activity>
+        <activity
             android:name=".Teacher.Subject.AddSubjectActivity"
             android:exported="false" />
         <activity
             android:name=".Student.Student_Dashboard.StudentDashboardActivity"
-            android:exported="false">
-
-        </activity>
+            android:exported="false"></activity>
         <activity
-            android:name=".Register.RegisterActivity"
+            android:name=".Login.Register.RegisterActivity"
             android:exported="false" />
         <activity
             android:name=".Login.LoginActivity"

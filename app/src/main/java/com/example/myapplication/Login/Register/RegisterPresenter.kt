@@ -1,4 +1,4 @@
-package com.example.myapplication.Register
+package com.example.myapplication.Login.Register
 
 import android.content.Intent
 import androidx.core.content.ContextCompat.startActivity
