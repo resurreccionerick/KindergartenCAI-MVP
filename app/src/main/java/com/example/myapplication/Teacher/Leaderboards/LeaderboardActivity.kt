@@ -42,7 +42,7 @@ class LeaderboardActivity : AppCompatActivity(), LeaderboardContract.View {
     }
 
     override fun setData(users: List<User>) {
-        val sortedUsers = users.sortedByDescending { it.userScore?.toInt() }
+        val sortedUsers = users.sortedByDescending { it.score?.toInt() }
         usersAdapter.updateData(sortedUsers)
     }
 

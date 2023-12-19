@@ -71,7 +71,7 @@ class StudentDashboardActivity : AppCompatActivity(), StudentDashboardContract.V
     }
 
     override fun setData(user: List<User>) {
-        binding.txtScore.text = "Your Score: " + user[0].userScore
+        binding.txtScore.text = "Your Score: " + user[0].score
     }
 
     override fun showMessage(message: String) {

@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.Models.User
 import com.example.myapplication.databinding.LeaderboardItemBinding
+import com.squareup.picasso.Picasso
 
 class LeaderboardAdapter(private var user: List<User>) :
     RecyclerView.Adapter<LeaderboardAdapter.LeaderboardViewHolder>() {
@@ -13,8 +14,10 @@ class LeaderboardAdapter(private var user: List<User>) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(user: User) {
 
-            binding.txtEmail.text = user.userEmail
-            binding.txtStar.text = user.userScore
+            binding.txtEmail.text = user.email
+            binding.txtStar.text = user.score
+
+            Picasso.get().load(user.img).into(binding.imgUser)
         }
     }
 

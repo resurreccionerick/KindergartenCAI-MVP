@@ -1,4 +1,4 @@
-package com.example.myapplication.Teacher.Leaderboards
+package com.example.myapplication.Admin.Teacher
 
 import android.util.Log
 import com.example.myapplication.Models.User
@@ -7,10 +7,10 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
-class LeaderboardPresenter(var view: LeaderboardActivity) : LeaderboardContract.Presenter {
-    val usersReference = FirebaseDatabase.getInstance().getReference("Users")
+class ManageTeacherPresenter(val view: ManageTeacherActivity) : ManageTeacherContract.Presenter {
+    private val usersReference = FirebaseDatabase.getInstance().getReference("Teachers")
 
-    override fun loadLeaderboard() {
+    override fun loadTeacher() {
         usersReference.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.exists()) {
@@ -28,6 +28,7 @@ class LeaderboardPresenter(var view: LeaderboardActivity) : LeaderboardContract.
                         val theUser = User(userId.toString(),name, userEmail, score, isActive, img)
                         Log.d("ERICK", theUser.toString())
                         user.add(theUser)
+
                     }
                     view.setData(user)
                 } else {
@@ -42,4 +43,24 @@ class LeaderboardPresenter(var view: LeaderboardActivity) : LeaderboardContract.
             }
         })
     }
+
+    override fun setCheck(student: User) {
+        // Get the user ID
+        val userId = student.userId
+
+        // Reference to the specific user's node
+        val userReference = usersReference.child(userId.toString())
+
+        // Update the isActive field
+        userReference.child("active").setValue(student.active)
+            .addOnSuccessListener {
+                // Handle success
+                view.showMessage("Update successful")
+            }
+            .addOnFailureListener { exception ->
+                // Handle error
+                view.showMessage("Error updating isActive: ${exception.message}")
+            }
+    }
+
 }

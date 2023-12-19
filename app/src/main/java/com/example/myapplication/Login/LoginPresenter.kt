@@ -65,27 +65,6 @@ class LoginPresenter(private val view: LoginContract.View) : LoginContract.Prese
     }
 
 
-//    override fun doLogin(email: String, password: String) {
-//        if (email.isNotEmpty() || password.isNotEmpty()) {
-//            auth.signInWithEmailAndPassword(email, password)
-//                .addOnCompleteListener { task ->
-//                    if (task.isSuccessful) {
-//                        view.onSuccess("Login successful!")
-//                    } else {
-//                        val errorMessage = when (task.exception) {
-//                            is FirebaseAuthInvalidCredentialsException ->
-//                                "Invalid email or password."
-//
-//                            else -> "Login failed. Please try again."
-//                        }
-//                        view.onFailure(errorMessage)
-//                    }
-//                }
-//        } else {
-//            view.onFailure("Please enter all fields")
-//        }
-//    }
-
     override fun autoLogin() {
         if (firebaseAuth.currentUser != null) {
             view.autoLogin("Welcome back! " + firebaseAuth.currentUser?.email.toString())

@@ -23,11 +23,14 @@ class LeaderboardPresenter(val view: StudentDashboardActivity) : LeaderboardCont
                     for (userSnapshot in dataSnapshot.children) {
 
                         val userId = userSnapshot.key // User ID
+                        val name = userSnapshot.child("name").getValue(String::class.java)
                         val userEmail = userSnapshot.child("email").getValue(String::class.java)
                         val score = userSnapshot.child("score").getValue(String::class.java)
+                        val isActive = userSnapshot.child("active").getValue(String::class.java)
+                        val img = userSnapshot.child("img").getValue(String::class.java)
 
-                        if(authId == userId){
-                            val theUser = User(userId.toString(), userEmail, score)
+                        if (authId == userId) {
+                            val theUser = User(userId.toString(),name, userEmail, score, isActive, img)
                             Log.d("ERICK", theUser.toString())
                             user.add(theUser)
                         }

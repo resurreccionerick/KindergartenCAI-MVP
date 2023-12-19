@@ -7,7 +7,7 @@ import android.view.View
 import com.example.myapplication.Login.Forgot.ForgotPassActivity
 
 import com.example.myapplication.databinding.ActivityMainBinding
-import com.example.myapplication.Login.Register.RegisterActivity
+import com.example.myapplication.Admin.Student.Register.StudentRegisterActivity
 import com.example.myapplication.Student.Student_Dashboard.StudentDashboardActivity
 import com.example.myapplication.Teacher.Teacher_Dashboard.TeacherDashboardActivity
 
@@ -39,7 +39,7 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
         }
 
         binding.btnRegisterLogin.setOnClickListener {
-            startActivity(Intent(this@LoginActivity, RegisterActivity::class.java))
+            startActivity(Intent(this@LoginActivity, StudentRegisterActivity::class.java))
         }
 
         binding.btnForgotPass.setOnClickListener {
