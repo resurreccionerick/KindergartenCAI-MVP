@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -15,14 +16,17 @@ import com.example.myapplication.Admin.AdminDashboardActivity
 import com.example.myapplication.databinding.ActivityTeachersRegisterBinding
 import java.io.ByteArrayOutputStream
 
-class TeachersRegisterActivity :AppCompatActivity(), TeacherRegisterContract.View {
+class TeachersRegisterActivity : AppCompatActivity(), TeacherRegisterContract.View {
     private lateinit var binding: ActivityTeachersRegisterBinding
     private lateinit var presenter: TeacherRegisterPresenter
-    private val CAMERA_PERMISSION_CODE = 101
-    private val STORAGE_PERMISSION_CODE = 102
+
+    //    private val CAMERA_PERMISSION_CODE = 101
+//    private val STORAGE_PERMISSION_CODE = 102
+    private val CAMERA_AND_STORAGE_PERMISSION_CODE = 100
     private val PICK_IMAGE_REQUEST = 103
     private val CAMERA_IMAGE_REQUEST = 104
     private var ImageUri: Uri? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityTeachersRegisterBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
@@ -31,7 +35,13 @@ class TeachersRegisterActivity :AppCompatActivity(), TeacherRegisterContract.Vie
         presenter = TeacherRegisterPresenter(this)
 
         binding.imgTeacher.setOnClickListener {
-            showImageSourceDialog()
+            if (hasCameraPermission() && hasStoragePermission()) {
+                // Permissions are already granted, show the image source dialog
+                showImageSourceDialog()
+            } else {
+                // Permissions are not granted, request them
+                requestCameraAndStoragePermissions()
+            }
         }
 
         binding.btnRegister.setOnClickListener {
@@ -65,12 +75,12 @@ class TeachersRegisterActivity :AppCompatActivity(), TeacherRegisterContract.Vie
             when (which) {
                 0 -> {
                     // Take Photo (Camera)
-                    presenter.onCameraPermissionGranted()
+                    captureImageFromCamera()
                 }
 
                 1 -> {
                     // Choose from Gallery (Storage)
-                    presenter.onStoragePermissionGranted()
+                    pickImageFromGallery()
                 }
 
                 2 -> {
@@ -99,6 +109,21 @@ class TeachersRegisterActivity :AppCompatActivity(), TeacherRegisterContract.Vie
         }
     }
 
+
+    private fun hasCameraPermission(): Boolean {
+        return ActivityCompat.checkSelfPermission(
+            this,
+            Manifest.permission.CAMERA
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun hasStoragePermission(): Boolean {
+        return ActivityCompat.checkSelfPermission(
+            this,
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
     private fun getImageUriFromBitmap(bitmap: Bitmap): Uri? {
         val bytes = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
@@ -113,18 +138,6 @@ class TeachersRegisterActivity :AppCompatActivity(), TeacherRegisterContract.Vie
         startActivity(Intent(this@TeachersRegisterActivity, AdminDashboardActivity::class.java))
     }
 
-    private fun requestPermission(permission: String, requestCode: Int) {
-        ActivityCompat.requestPermissions(this, arrayOf(permission), requestCode)
-    }
-
-    override fun requestCameraPermission() {
-        requestPermission(Manifest.permission.CAMERA, CAMERA_PERMISSION_CODE)
-    }
-
-    override fun requestStoragePermission() {
-        requestPermission(Manifest.permission.CAMERA, STORAGE_PERMISSION_CODE)
-    }
-
     override fun pickImageFromGallery() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
@@ -137,6 +150,29 @@ class TeachersRegisterActivity :AppCompatActivity(), TeacherRegisterContract.Vie
             startActivityForResult(cameraIntent, CAMERA_IMAGE_REQUEST)
         } else {
             showToast("Camera is not available.")
+        }
+    }
+
+    override fun requestCameraAndStoragePermissions() {
+        val cameraPermission = Manifest.permission.CAMERA
+        val storagePermission = Manifest.permission.READ_EXTERNAL_STORAGE
+
+        val permissionsToRequest = mutableListOf<String>()
+
+        if (!hasCameraPermission()) {
+            permissionsToRequest.add(cameraPermission)
+        }
+
+        if (!hasStoragePermission()) {
+            permissionsToRequest.add(storagePermission)
+        }
+
+        if (permissionsToRequest.isNotEmpty()) {
+            ActivityCompat.requestPermissions(
+                this,
+                permissionsToRequest.toTypedArray(),
+                CAMERA_AND_STORAGE_PERMISSION_CODE
+            )
         }
     }
 

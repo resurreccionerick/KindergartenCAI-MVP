@@ -9,10 +9,9 @@ interface TeacherRegisterContract {
         fun onSuccess(message: String);
         fun onFailure(message: String);
         fun onTeacherUploaded()
-        fun requestCameraPermission()
-        fun requestStoragePermission()
         fun pickImageFromGallery()
         fun captureImageFromCamera()
+        fun requestCameraAndStoragePermissions()
     }
 
     interface Presenter {

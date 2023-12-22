@@ -58,6 +58,13 @@ class ManageTeacherAdapter(
         users = userList
         notifyDataSetChanged()
     }
+
+    fun filter(query: String) {
+        val filteredList = users.filter { user ->
+            user.email?.contains(query, ignoreCase = true) == true
+        }
+        updateData(filteredList)
+    }
 }
 
 

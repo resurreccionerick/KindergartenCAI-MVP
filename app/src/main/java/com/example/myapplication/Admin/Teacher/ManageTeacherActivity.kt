@@ -3,6 +3,8 @@ package com.example.myapplication.Admin.Teacher
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.Admin.AdminDashboardActivity
@@ -33,6 +35,22 @@ class ManageTeacherActivity : AppCompatActivity(), ManageTeacherContract.View {
         binding.fabRegisterTeacher.setOnClickListener {
             startActivity(Intent(this@ManageTeacherActivity, TeachersRegisterActivity::class.java))
         }
+
+        binding.txtSearchTeacher.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                if (binding.txtSearchTeacher.text.isNotEmpty()) {
+                    adapter.filter(s.toString())
+                } else {
+                    presenter.loadTeacher()
+                }
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+        })
 
         presenter.loadTeacher()
 

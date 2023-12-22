@@ -3,6 +3,8 @@ package com.example.myapplication.Admin.Student
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.Admin.AdminDashboardActivity
@@ -27,12 +29,29 @@ class ManageStudentActivity : AppCompatActivity(), ManageStudentContract.View {
                 presenter.setCheck(student)
             })
 
+
         binding.rvStudent.layoutManager = LinearLayoutManager(this)
         binding.rvStudent.adapter = adapter
 
         binding.fabRegisterStudent.setOnClickListener {
             startActivity(Intent(this@ManageStudentActivity, StudentRegisterActivity::class.java))
         }
+
+        binding.txtSearchStudent.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                if (binding.txtSearchStudent.text.isNotEmpty()) {
+                    adapter.filter(s.toString())
+                } else {
+                    presenter.loadStudent()
+                }
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+        })
 
         presenter.loadStudent()
     }
@@ -53,5 +72,7 @@ class ManageStudentActivity : AppCompatActivity(), ManageStudentContract.View {
         finish()
         startActivity(Intent(this@ManageStudentActivity, AdminDashboardActivity::class.java))
     }
+
+
 }
 
