@@ -104,16 +104,20 @@
         app:layout_constraintStart_toStartOf="@+id/btnLogin"
         app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
 
-    <ProgressBar
-        android:id="@+id/progressBarLogin"
-        style="?android:attr/progressBarStyleInverse"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnRegisterLogin" />
+    <include
+        android:id="@+id/progressDialog"
+        layout="@layout/progressbar_loading" />
+
+<!--    <ProgressBar-->
+<!--        android:id="@+id/progressBarLogin"-->
+<!--        style="?android:attr/progressBarStyleInverse"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:visibility="gone"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/btnRegisterLogin" />-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

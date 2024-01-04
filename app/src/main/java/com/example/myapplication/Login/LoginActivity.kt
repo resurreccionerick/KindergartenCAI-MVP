@@ -31,7 +31,9 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
         //presenter.autoLogin() //check if the user was not yet logged out
 
         binding.btnLogin.setOnClickListener {
-            binding.progressBarLogin.visibility = View.VISIBLE
+            binding.progressDialog.progressBarLoading.visibility = View.VISIBLE
+            binding.btnLogin.visibility = View.GONE
+
             presenter.doLogin(
                 binding.txtLoginEmail.text.toString(),
                 binding.txtLoginPass.text.toString()
@@ -63,7 +65,8 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
     }
 
     override fun onFailure(message: String) {
-        binding.progressBarLogin.visibility = View.INVISIBLE
+        binding.btnLogin.visibility = View.VISIBLE
+        binding.progressDialog.progressBarLoading.visibility = View.INVISIBLE
         showToast(message)
     }
 

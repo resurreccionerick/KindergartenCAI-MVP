@@ -24,6 +24,9 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
+            android:name=".Profile.ProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".Login.Forgot.ForgotPassActivity"
             android:exported="false" />
         <activity
@@ -94,13 +97,13 @@
         </activity>
         <activity
             android:name=".Teacher.Teacher_Dashboard.TeacherDashboardActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
         <activity
             android:name=".Teacher.Subject.AddSubjectActivity"
             android:exported="false" />
         <activity
             android:name=".Student.Student_Dashboard.StudentDashboardActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
         <activity
             android:name=".Login.Register.RegisterActivity"
             android:exported="false" />

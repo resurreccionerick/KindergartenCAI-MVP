@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import com.example.myapplication.Login.LoginActivity
+import com.example.myapplication.Profile.ProfileActivity
 import com.example.myapplication.R
 import com.example.myapplication.Teacher.Leaderboards.LeaderboardActivity
 import com.example.myapplication.Teacher.Subject.SubjectActivity
@@ -49,11 +50,13 @@ class TeacherDashboardActivity : AppCompatActivity(), TeacherDashboardContract.V
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-//            R.id.itemProfile -> {
-//                // Handle action_item1 click
-//                //presenter.onItem1Clicked() // Notify presenter about the action
-//                return true
-//            }
+            R.id.itemProfile -> {
+                val intent = Intent(this, ProfileActivity::class.java)
+                intent.putExtra("userRef", "Teachers")
+                startActivity(intent)
+                finish()
+                return true
+            }
 
             R.id.itemLogout -> {
                 // Handle action_item2 click

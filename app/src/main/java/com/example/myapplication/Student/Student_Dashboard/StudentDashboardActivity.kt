@@ -9,10 +9,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.example.myapplication.Login.LoginActivity
 import com.example.myapplication.Models.User
+import com.example.myapplication.Profile.ProfileActivity
 import com.example.myapplication.R
 import com.example.myapplication.Student.Leaderboards.LeaderboardContract
 import com.example.myapplication.Student.Leaderboards.LeaderboardPresenter
 import com.example.myapplication.Student.Subject.SubjectActivity
+import com.example.myapplication.Student.Subject.Video.VideoActivity
 import com.example.myapplication.databinding.ActivityStudentdashboardBinding
 
 class StudentDashboardActivity : AppCompatActivity(), StudentDashboardContract.View,
@@ -40,17 +42,20 @@ class StudentDashboardActivity : AppCompatActivity(), StudentDashboardContract.V
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.tcher_main_menu, menu)
+        menuInflater.inflate(R.menu.student_main_menu, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-//            R.id.itemProfile -> {
-//                // Handle action_item1 click
-//                //presenter.onItem1Clicked() // Notify presenter about the action
-//                return true
-//            }
+            R.id.itemProfile -> {
+                // Handle action_item1 click
+                val intent = Intent(this, ProfileActivity::class.java)
+                intent.putExtra("userRef", "Users")
+                startActivity(intent)
+                finish()
+                return true
+            }
 
             R.id.itemLogout -> {
                 // Handle action_item2 click
@@ -66,9 +71,6 @@ class StudentDashboardActivity : AppCompatActivity(), StudentDashboardContract.V
         startActivity(Intent(this@StudentDashboardActivity, LoginActivity::class.java))
     }
 
-    override fun goToProfile() {
-        TODO("Not yet implemented")
-    }
 
     override fun setData(user: List<User>) {
         binding.txtScore.text = "Your Score: " + user[0].score
