@@ -14,8 +14,8 @@ class SplashScreenActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySplashScreenBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         binding = ActivitySplashScreenBinding.inflate(layoutInflater)
+        super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
         val animation = AnimationUtils.loadAnimation(this, R.anim.logo_animation)

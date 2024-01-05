@@ -11,8 +11,6 @@ import com.example.myapplication.Teacher.Teacher_Dashboard.TeacherDashboardActiv
 import com.example.myapplication.databinding.ActivityLeaderboardBinding
 
 
-// LeaderboardActivity.kt
-
 class LeaderboardActivity : AppCompatActivity(), LeaderboardContract.View {
     private lateinit var binding: ActivityLeaderboardBinding
     private lateinit var presenter: LeaderboardPresenter

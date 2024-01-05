@@ -6,12 +6,14 @@ import android.os.Bundle
 import android.widget.Toast
 import com.example.myapplication.Models.User
 import com.example.myapplication.Student.Student_Dashboard.StudentDashboardActivity
+import com.example.myapplication.Teacher.Teacher_Dashboard.TeacherDashboardActivity
 import com.example.myapplication.databinding.ActivityStudentProfileBinding
 import com.squareup.picasso.Picasso
 
 class ProfileActivity : AppCompatActivity(), ProfileContract.View {
     private lateinit var binding: ActivityStudentProfileBinding
     private lateinit var presenter: ProfilePresenter
+    lateinit var ref : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityStudentProfileBinding.inflate(layoutInflater)
@@ -20,8 +22,8 @@ class ProfileActivity : AppCompatActivity(), ProfileContract.View {
 
         presenter = ProfilePresenter(this)
 
+        ref = intent.getStringExtra("userRef").toString()
 
-        var ref = intent.getStringExtra("userRef").toString()
         presenter.loadProfile(ref)
     }
 
@@ -40,7 +42,11 @@ class ProfileActivity : AppCompatActivity(), ProfileContract.View {
     }
 
     override fun onBackPressed() {
-        startActivity(Intent(this, StudentDashboardActivity::class.java))
+        if (ref == "Users") {
+            startActivity(Intent(this, StudentDashboardActivity::class.java))
+        } else {
+            startActivity(Intent(this, TeacherDashboardActivity::class.java))
+        }
         finish()
     }
 }

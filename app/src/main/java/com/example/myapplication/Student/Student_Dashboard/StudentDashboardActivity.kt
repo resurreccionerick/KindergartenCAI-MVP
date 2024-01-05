@@ -15,6 +15,7 @@ import com.example.myapplication.Student.Leaderboards.LeaderboardContract
 import com.example.myapplication.Student.Leaderboards.LeaderboardPresenter
 import com.example.myapplication.Student.Subject.SubjectActivity
 import com.example.myapplication.Student.Subject.Video.VideoActivity
+import com.example.myapplication.Student.Unity.UnityActivity
 import com.example.myapplication.databinding.ActivityStudentdashboardBinding
 
 class StudentDashboardActivity : AppCompatActivity(), StudentDashboardContract.View,
@@ -33,6 +34,10 @@ class StudentDashboardActivity : AppCompatActivity(), StudentDashboardContract.V
 
         binding.btnLessonMain.setOnClickListener {
             startActivity(Intent(this@StudentDashboardActivity, SubjectActivity::class.java))
+        }
+
+        binding.btnMiniGame.setOnClickListener {
+            startActivity(Intent(this@StudentDashboardActivity, UnityActivity::class.java))
         }
 
         leaderboardPresenter.loadScore()
